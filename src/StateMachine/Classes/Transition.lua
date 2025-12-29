@@ -163,74 +163,19 @@ function Transition:OnInit(_data: {[string]: any}): ()
     
 end
 
---[=[
-    :::info
-    This is a **Virtual Method**. Virtual Methods are meant to be overwritten
-    :::
-
-    Called whenever you enter this transition object
-
-    ```lua
-    function State:OnEnter(data)
-        data.part.Color = Color3.fromRGB(0, 166, 255)
-    end
-    ```
-
-    @param _data {[string]: any} -- This is the data from the StateMachine itself!
-
-    @return ()
-]=]
 function Transition:OnEnter(_data: {[string]: any}): ()
 
 end
 
---[=[
-    :::info
-    This is a **Virtual Method**. Virtual Methods are meant to be overwritten
-    :::
-
-    Called whenever you leave this transition object
-
-    ```lua
-    function State:OnLeave(data)
-        data.stuff:Clean()
-    end
-    ```
-
-    @param _data {[string]: any} -- This is the data from the StateMachine itself!
-
-    @return ()
-]=]
 function Transition:OnLeave(_data: {[string]: any}): ()
 
 end
 
-
---[=[
-    :::info
-    This is a **Virtual Method**. Virtual Methods are meant to be overwritten
-    :::
-
-    @deprecated v1.1.7 -- This function is redundant since it essencially just works as a blocker for OnDataChanged
-
-    Whether it can change to this state or not. It's a good way to lock the current state
-
-    @param data {[string]: any}
-
-    @return boolean -- By default it returns true
-]=]
 function Transition:CanChangeState(data: {[string]: any}): boolean
     assert(data, "")
     return true
 end
 
---[=[
-    Forcelly changes the current state of our state machine to a new one
-
-    @param newState string -- The name of the new state
-
-    @return ()
-]=]
 function Transition:ChangeState(newState: string): ()
     if not self._changeState then
         return
@@ -239,28 +184,11 @@ function Transition:ChangeState(newState: string): ()
     self._changeState(newState)
 end
 
---[=[
-    :::info
-    This is a **Virtual Method**. Virtual Methods are meant to be overwritten
-    :::
-    
-    Should return true if it should change to the target state
-    and false if it shouldn't
-
-    @param data {[string]: any}
-
-    @return boolean -- By default it returns false
-]=]
 function Transition:OnDataChanged(data: {[string]: any}): boolean
     assert(data, "")
     return false
 end
 
---[=[
-    Gets the current state of our state machine
-
-    @return string
-]=]
 function Transition:GetState(): string
     if not self._getState then
         return ""
@@ -269,11 +197,6 @@ function Transition:GetState(): string
     return self._getState()
 end
 
---[=[
-    Gets the previous state of our state machine
-
-    @return string
-]=]
 function Transition:GetPreviousState(): string
     if not self._getPreviousState then
         return ""
@@ -282,24 +205,6 @@ function Transition:GetPreviousState(): string
     return self._getPreviousState()
 end
 
---[=[
-    Changing data request. You can also just Get the data and change the data at run time.
-
-    ```lua
-    local example: State = State.new("Blue")
-
-    function example:OnEnter(data)
-        self:ChangeData("color", Color3.fromRGB(255, 0, 0)) -- Change to red :D
-
-        data.part.Color = data.color
-    end
-    ```
-
-    @param index string
-    @param newValue any
-
-    @return ()
-]=]
 function Transition:ChangeData(index: string, newValue: any): ()
     if not self._changeData then
         return
@@ -308,21 +213,6 @@ function Transition:ChangeData(index: string, newValue: any): ()
     self._changeData(index, newValue)
 end
 
---[=[
-    :::info
-    This is a **Virtual Method**. Virtual Methods are meant to be overwritten
-    :::
-
-    Called whenever the state machine is destroyed
-
-    ```lua
-    function Transition:OnDestroy()
-        print("I was destroyed!")
-    end
-    ```
-
-    @return ()
-]=]
 function Transition:OnDestroy(): ()
     
 end
